@@ -1,6 +1,13 @@
-export class Product {
-  constructor() {
+class Product {
+  constructor(data, container, popup, cart) {
+    this.name = data.name;
+    this.text = data.text;
+    this.cost = data.cost;
+    this.container = container;
+    this.popup = popup;
+    this.product = null;
 
+    this.showProduct = this.showProduct.bind(this);
   }
 
   template() {
@@ -17,5 +24,32 @@ export class Product {
     var element = document.createElement("div");
     element.insertAdjacentHTML('beforeend', templateString.trim());
     return element.firstChild;
+  }
+
+  render() {
+    this.product = this.template();
+    this.product.querySelector("#product-name").textContent = this.name;
+    this.product.querySelector("#product-cost").textContent = this.cost;
+
+    this.addListeners();
+
+    this.container.appendChild(this.product);
+  }
+
+  addToCart() {
+    alert("Добавление в корзину");
+  }
+
+  showProduct() {
+    this.popup.render(this.text);
+  }
+
+  addListeners() {
+    this.product.querySelector("#showProduct").addEventListener("click", this.showProduct);
+    this.product.querySelector("#buyProduct").addEventListener("click", this.addToCart);
+  }
+
+  removeListeners() {
+
   }
 }
