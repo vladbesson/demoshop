@@ -1,13 +1,13 @@
 class Product {
-  constructor(data, container, popup, cart) {
-    this.name = data.name;
-    this.text = data.text;
-    this.cost = data.cost;
+  constructor(item, container, popup, cart) {
+    this.item = item;
     this.container = container;
+    this.cart = cart;
     this.popup = popup;
     this.product = null;
 
     this.showProduct = this.showProduct.bind(this);
+    this.addToCart = this.addToCart.bind(this);
   }
 
   template() {
@@ -28,8 +28,8 @@ class Product {
 
   render() {
     this.product = this.template();
-    this.product.querySelector("#product-name").textContent = this.name;
-    this.product.querySelector("#product-cost").textContent = this.cost;
+    this.product.querySelector("#product-name").textContent = this.item.name;
+    this.product.querySelector("#product-cost").textContent = this.item.cost;
 
     this.addListeners();
 
@@ -37,11 +37,11 @@ class Product {
   }
 
   addToCart() {
-    alert("Добавление в корзину");
+    this.cart.addProduct(this.item);
   }
 
   showProduct() {
-    this.popup.render(this.text);
+    this.popup.render(this.item.text);
   }
 
   addListeners() {
