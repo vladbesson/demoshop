@@ -1,11 +1,13 @@
 class Product {
-  constructor(data, container, popup) {
+  constructor(data, container, renderPopup, addToCart) {
     this.data = data;
     this.container = container;
-    this.popup = popup;
+    this.renderPopup = renderPopup;
+    this.addToCart = addToCart;
 
     this.product = null;
     this.showProduct = this.showProduct.bind(this);
+    this.addProductToCart = this.addProductToCart.bind(this);
   }
 
   template() {
@@ -36,11 +38,16 @@ class Product {
   }
 
   showProduct() {
-    this.popup.render(this.data.text)
+    this.renderPopup(this.data.text);
+  }
+
+  addProductToCart() {
+    this.addToCart(this.data);
   }
 
   setLesteners() {
     this.product.querySelector(".btn-primary").addEventListener("click", this.showProduct);
+    this.product.querySelector(".btn-warning").addEventListener("click", this.addProductToCart);
   }
 
   removeListeners() {
